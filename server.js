@@ -4,10 +4,10 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
 
 // Error handling uncaught exceptions throughout the application
-process.on('uncaughtException', (err) => {
-  console.log('UNCAUGHT EXCEPTION! Shutting down...');
-  console.log(err.name, err.message);
-});
+// process.on('uncaughtException', (err) => {
+//   console.log('UNCAUGHT EXCEPTION! Shutting down...');
+//   console.log(err.name, err.message);
+// });
 
 const app = require('./app');
 

@@ -13,11 +13,7 @@ exports.aliasTopTours = (request, response, next) => {
 
 exports.getAllTours = catchAsync(async (request, response, next) => {
   // EXECUTE QUERY
-  const features = new APIFeatures(Tour.find(), request.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
+  const features = new APIFeatures(Tour.find(), request.query).filter().sort().limitFields().paginate();
 
   const tours = await features.query;
 
