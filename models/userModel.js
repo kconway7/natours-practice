@@ -45,27 +45,28 @@ const userSchema = new mongoose.Schema({
   active: {
     type: Boolean,
     default: true,
+    select: false,
   },
 });
 
 //ENCRYPT PASSWORD
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+// userSchema.pre('save', async function (next) {
+//   if (!this.isModified('password')) return next();
 
-  this.password = await bcrypt.hash(this.password, 12);
+//   this.password = await bcrypt.hash(this.password, 12);
 
-  this.passwordConfirm = undefined;
-});
+//   this.passwordConfirm = undefined;
+// });
 
-// Update changed password At property
-userSchema.pre('save', function (next) {
-  if (!this.isModified('password') || this.isNew) {
-    return next();
-  }
+// // Update changed password At property
+// userSchema.pre('save', function (next) {
+//   if (!this.isModified('password') || this.isNew) {
+//     return next();
+//   }
 
-  this.passwordChangedAt = Date.now() - 1000;
-  next();
-});
+//   this.passwordChangedAt = Date.now() - 1000;
+//   next();
+// });
 
 userSchema.pre(/^find/, function (next) {
   this.find({ active: { $ne: false } });
@@ -99,6 +100,6 @@ userSchema.methods.createPasswordResetToken = function () {
   return resetToken;
 };
 
-const User = mongoose.model('user', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

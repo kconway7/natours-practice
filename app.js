@@ -9,8 +9,10 @@ const hpp = require('hpp');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
+
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
+const reviewRouter = require('./routes/reviewRoutes');
 
 const app = express();
 
@@ -40,7 +42,7 @@ app.use(express.json({ limit: '10kb' }));
 app.use(mongoSanitize());
 
 // DATA SANITIZATION AGAINST XSS
-ap.use(xss());
+app.use(xss());
 
 // PREVENT PARAMETER POLLUTION
 app.use(
@@ -66,6 +68,7 @@ app.use((req, res, next) => {
 // Mount Routers
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/reviews', reviewRouter);
 
 // Error Handling middleware for any routes not found
 app.all('*', (request, response, next) => {
